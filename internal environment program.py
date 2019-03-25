@@ -3,7 +3,7 @@ import os
 
 
 img_path = os.path.join('C:\Python34', 'trash.png')
-
+img_path1 = os.path.join('C:\Python34', 'rubbish.png')
 class Trash(object):  # represents the trashcan, not the game
     def __init__(self):
         self.image = pygame.image.load(img_path)
@@ -14,7 +14,7 @@ class Trash(object):  # represents the trashcan, not the game
     def handle_keys(self):
         """ Handles Keys """
         key = pygame.key.get_pressed()
-        dist = 1 # distance moved in 1 frame, try changing it to 5
+        dist = 5 # distance moved in 1 frame, try changing it to 5
         if key[pygame.K_DOWN]: # down key
             self.y += dist # move down
         elif key[pygame.K_UP]: # up key
@@ -29,11 +29,25 @@ class Trash(object):  # represents the trashcan, not the game
         # blit yourself at your current position
         surface.blit(self.image, (self.x, self.y))
 
-
+class Rubbish(object): #represents all rubbish falling from top of screen
+    def __init__(self):
+        self.image = pygame.image.load(img_path1)
+        self.y = 0
+        self.x = 0
+    def draw(self, surface):
+        """ Draw on surface """
+        # blit yourself at your current position
+        surface.blit(self.image, (self.x, self.y))        
+        
+        
+        
+        
+        
 pygame.init()
 screen = pygame.display.set_mode((640, 400))
 
 trash = Trash() # create an instance
+rubbish = Rubbish()
 clock = pygame.time.Clock()
 
 running = True
@@ -48,6 +62,7 @@ while running:
 
     screen.fill((255,255,255)) # fill the screen with white
     trash.draw(screen) # draw the trashcan to the screen
-    pygame.display.update() # update the screen with the trashcan drawn onto it, instead of a black screen. 
+    rubbish.draw(screen) #draw the rubbish to the screen
+    pygame.display.update() # update the screen with the trashcan, and rubbish sprites drawn onto it, instead of a black screen. 
 
     clock.tick(40)
